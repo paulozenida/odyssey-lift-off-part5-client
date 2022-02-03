@@ -2,21 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import GlobalStyles from './styles';
 import Pages from './pages';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 
-console.info('all env properties', process.env);
-console.info('SERVER_URI', process.env.SERVER_URI);
-
+console.info('current env is', process.env.NODE_ENV);
+const uri = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' :
+    'https://client-castronauts-pz.herokuapp.com/';
 const client = new ApolloClient({
-  uri: process.env.SERVER_URI || 'http://localhost:4000/',
-  cache: new InMemoryCache(),
+    uri: uri,
+    cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
-
-  <ApolloProvider client={client}>
-    <GlobalStyles />
-    <Pages />
-  </ApolloProvider>,
-  document.getElementById('root')
+    <ApolloProvider client={client}>
+        <GlobalStyles/>
+        <Pages/>
+    </ApolloProvider>,
+    document.getElementById('root')
 );
